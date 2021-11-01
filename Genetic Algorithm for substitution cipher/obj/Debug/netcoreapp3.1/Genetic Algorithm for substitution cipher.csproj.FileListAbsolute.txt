@@ -1,0 +1,12 @@
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/bin/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.deps.json
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/bin/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.runtimeconfig.json
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/bin/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.runtimeconfig.dev.json
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/bin/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.dll
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/bin/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.pdb
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/obj/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.csprojAssemblyReference.cache
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/obj/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.AssemblyInfoInputs.cache
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/obj/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.AssemblyInfo.cs
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/obj/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.csproj.CoreCompileInputs.cache
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/obj/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.dll
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/obj/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.pdb
+/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/obj/Debug/netcoreapp3.1/Genetic Algorithm for substitution cipher.genruntimeconfig.cache
