@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
 
 namespace Genetic_Algorithm_for_substitution_cipher
 {
@@ -64,7 +65,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
            }
 
 
-           for (int l = 0; l < 2000; l++)
+           for (int l = 0; l < 1000; l++)
            {
 
                population = GetNewPopulation(population);
@@ -134,7 +135,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
            population.Add(resultString.ToArray());
 
            
-           for (int i = 0; i < 9; i++)
+           for (int i = 0; i < 39; i++)
            {
                var startStringArr = resultString.ToArray();
                int first = rnd.Next(startStringArr.Length);
@@ -190,6 +191,49 @@ namespace Genetic_Algorithm_for_substitution_cipher
             return newPopulation;
 
         }
+       
+       
+       public List<char[]> GetNewPopulation2(List<char[]> population)
+       {
+           List<char[]> newPopulation = new List<char[]>(population);
+           int alpha = 3;
+           Random rnd = new Random();
+
+           while (population.Count != 0)
+           {
+                
+               int index = rnd.Next(population.Count);
+               var parent1 = population[index];
+               population.Remove(parent1);
+               index = rnd.Next(population.Count);
+               var parent2 = population[index];
+               population.Remove(parent2);
+
+               var child1 = parent1.Take(alpha).ToList();
+               foreach (var i in parent2)
+               {
+                   if (!child1.Contains(i))
+                   {
+                       child1.Add(i);
+                   }
+               }
+
+               var child2 = parent2.Take(alpha).ToList();
+               foreach (var i in parent1)
+               {
+                   if (!child2.Contains(i))
+                   {
+                       child2.Add(i);
+                   }
+               }
+
+               newPopulation.Add(child1.ToArray());
+               newPopulation.Add(child2.ToArray());
+           }
+
+           return newPopulation;
+
+       }
 
 
         public List<char[]> Mutation(List<char[]> population)
@@ -200,7 +244,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
             {
                 var prob = rnd.Next(1,100);
 
-                if (prob <= 10)
+                if (prob <= 2)
                 {
                     int first = rnd.Next(child.Length);
                     int second = rnd.Next(child.Length);
@@ -242,16 +286,19 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
         public string Subtitute(string baseText, char[] charsToSubstitute)
         {
-            string resultString = "";
-            foreach (var i in baseText)
-            {
-                var index = Array.IndexOf(alphabet, i);
+            //string resultString = "";
+            
+            Dictionary<char, char> replacementDictionary = new Dictionary<char, char>();
 
-                if (index < charsToSubstitute.Length)
-                {
-                    resultString += charsToSubstitute[index];
-                }
+            for (int i = 0; i < charsToSubstitute.Length; i++)
+            {
+                replacementDictionary.Add(alphabet[i], charsToSubstitute[i]);
             }
+
+            string resultString = string.Join(string.Empty, baseText.Select(c => {
+                char rep;
+                return replacementDictionary.TryGetValue(c, out rep) ? rep : c;
+            }));
 
             return resultString;
         }
@@ -261,30 +308,23 @@ namespace Genetic_Algorithm_for_substitution_cipher
             var text = Subtitute(basedText.ToLower(), charsToSubstitute);
             
             var fitness = 0.0;
-            // foreach (var i in text)
-            // {
-            //     fitness += NGramms.Letters[i] ;
-            // }
-
-            var bigramms = divideIntoBigramms(text);
-             
-            foreach (var bigramm in bigramms)
+            foreach (var i in text)
             {
-                if (NGramms.Bigrams.ContainsKey(bigramm)) 
-                { 
-                    fitness += NGramms.Bigrams[bigramm];
-                }
+                fitness += NGramms.Letters[i]/30 ;
             }
             
-            var trigramms = divideIntoTrigramms(text);
+
+            fitness += divideIntoBigramms(text)/15;
             
-            foreach (var trigramm in trigramms)
-            {
-                if (NGramms.Trirams.ContainsKey(trigramm))
-                {
-                    fitness += NGramms.Trirams[trigramm];
-                }
-                
+             var trigramms = divideIntoTrigramms(text);
+            
+             foreach (var trigramm in trigramms)
+             {
+                 if (NGramms.Trirams.ContainsKey(trigramm))
+                 {
+                     fitness += NGramms.Trirams[trigramm]/20 ;
+                 }
+                 
             }
             
             var quadrigramms = divideIntoQuadrigrams(text);
@@ -294,23 +334,30 @@ namespace Genetic_Algorithm_for_substitution_cipher
                 
                 if (NGramms.Quadrigrams.ContainsKey(quadrigramm)) 
                 { 
-                    fitness += NGramms.Quadrigrams[quadrigramm] * 100;
+                    fitness += NGramms.Quadrigrams[quadrigramm]/10 ;
                 }
             }
 
             return fitness;
         }
 
-        public string[] divideIntoBigramms(string text)
+        public double divideIntoBigramms(string text)
         {
-            
+            var fitness = 0.0;
             List<string> bigramms  = new List<string>();
             for (int i = 0; i < text.Length - 1; i++)
             {
-                string bigramm = text[i].ToString() + text[i + 1];
-                bigramms.Add(bigramm);
+                if (NGramms.Bigrams.ContainsKey(text[i].ToString() + text[i + 1])) 
+                { 
+                    fitness += NGramms.Bigrams[text[i].ToString() + text[i + 1]]/3;
+                }
+                // StringBuilder bigramm = new StringBuilder();
+                // bigramm.Append(text[i].ToString());
+                // bigramm.Append(text[i + 1]);
+                // bigramms.Add(bigramm.ToString());
             }
-            return bigramms.ToArray();
+            //return bigramms.ToArray();
+            return fitness;
         }
         
         public string[] divideIntoTrigramms(string text)

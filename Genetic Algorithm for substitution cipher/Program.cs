@@ -18,24 +18,24 @@ namespace Genetic_Algorithm_for_substitution_cipher
         static void Main(string[] args)
         {
 
-            // using (StreamReader sr = new StreamReader("/Users/admin/Desktop/english_quadrigrams.txt", System.Text.Encoding.Default))
-            // {
-            //     string line;
-            //     while ((line = sr.ReadLine()) != null)
-            //     {
-            //         string[] point = line.Split(" ");
-            //         var power = 0.0;
-            //         try
-            //         {
-            //             power = Math.Pow(Double.Parse(point[1]), int.Parse(point[2])*-1);
-            //             NGramms.Quadrigrams.Add( point[0].ToLower(), power);
-            //         }
-            //         catch (Exception e)
-            //         {
-            //             NGramms.Quadrigrams.Add( point[0].ToLower(), Double.Parse(point[1]));
-            //         }
-            //     }
-            // }
+            using (StreamReader sr = new StreamReader("/Users/admin/Desktop/english_quadrigrams.txt", System.Text.Encoding.Default))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] point = line.Split(" ");
+                    var power = 0.0;
+                    try
+                    {
+                        power = Math.Pow(Double.Parse(point[1]), int.Parse(point[2])*-1);
+                        NGramms.Quadrigrams.Add( point[0].ToLower(), power);
+                    }
+                    catch (Exception e)
+                    {
+                        NGramms.Quadrigrams.Add( point[0].ToLower(), Double.Parse(point[1]));
+                    }
+                }
+            }
 
             Substitution a = new Substitution();
             a.SolveCipher();
