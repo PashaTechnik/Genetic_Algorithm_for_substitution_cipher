@@ -8,7 +8,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
 {
     public class Substitution
     {
-        public char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
+        static public char[] alphabet = "abcdefghijklmnopqrstuvwxyz".ToCharArray();
         
         public double CurrentFitness;
         
@@ -70,10 +70,10 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
                population = GetNewPopulation(population);
                population = Mutation(population); 
-               population = population.OrderByDescending(x => CalculateFitness(x)).ToList();
+               population = population.OrderByDescending(x => calculateCoincidence(Program.encryptedText,x)).ToList();
                if (CalculateFitness(population.First()) > CurrentFitness)
                {
-                   CurrentFitness = CalculateFitness(population.First());
+                   CurrentFitness = calculateCoincidence(Program.encryptedText, population.First());
                    charToSubstitute = population.First();
                }
 
@@ -284,7 +284,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
             return chromosome;
         }
 
-        public string Subtitute(string baseText, char[] charsToSubstitute)
+        static public string Subtitute(string baseText, char[] charsToSubstitute)
         {
             //string resultString = "";
             
@@ -303,18 +303,18 @@ namespace Genetic_Algorithm_for_substitution_cipher
             return resultString;
         }
 
-        public double CalculateFitness(char[] charsToSubstitute)
+        static public double CalculateFitness(char[] charsToSubstitute)
         {
             var text = Subtitute(basedText.ToLower(), charsToSubstitute);
             
             var fitness = 0.0;
-            foreach (var i in text)
-            {
-                fitness += NGramms.Letters[i]/30 ;
-            }
+            // foreach (var i in text)
+            // {
+            //     fitness += NGramms.Letters[i] ;
+            // }
             
 
-            fitness += divideIntoBigramms(text)/15;
+             //fitness += divideIntoBigramms(text)/20;
             
              var trigramms = divideIntoTrigramms(text);
             
@@ -322,10 +322,9 @@ namespace Genetic_Algorithm_for_substitution_cipher
              {
                  if (NGramms.Trirams.ContainsKey(trigramm))
                  {
-                     fitness += NGramms.Trirams[trigramm]/20 ;
+                     fitness += NGramms.Trirams[trigramm];
                  }
-                 
-            }
+             }
             
             var quadrigramms = divideIntoQuadrigrams(text);
             
@@ -334,14 +333,14 @@ namespace Genetic_Algorithm_for_substitution_cipher
                 
                 if (NGramms.Quadrigrams.ContainsKey(quadrigramm)) 
                 { 
-                    fitness += NGramms.Quadrigrams[quadrigramm]/10 ;
+                    fitness += NGramms.Quadrigrams[quadrigramm]*5;
                 }
             }
 
             return fitness;
         }
 
-        public double divideIntoBigramms(string text)
+        static public double divideIntoBigramms(string text)
         {
             var fitness = 0.0;
             List<string> bigramms  = new List<string>();
@@ -360,7 +359,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
             return fitness;
         }
         
-        public string[] divideIntoTrigramms(string text)
+        static public string[] divideIntoTrigramms(string text)
         {
             
             List<string> trigramms  = new List<string>();
@@ -372,7 +371,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
             return trigramms.ToArray();
         }
         
-        public string[] divideIntoQuadrigrams(string text)
+        static public string[] divideIntoQuadrigrams(string text)
         {
         
             List<string> quadrigramms = new List<string>();
@@ -384,6 +383,20 @@ namespace Genetic_Algorithm_for_substitution_cipher
         
             return quadrigramms.ToArray();
         }
-        
+
+        static public double calculateCoincidence(string encryptedText, char[] charToSubstitute)
+        {
+            double coincidence = 0.0;
+            for (int i = 0; i < encryptedText.Length; i++)
+            {
+                if (encryptedText[i] == Substitution.Subtitute(Substitution.basedText.ToLower(), charToSubstitute)[i])
+                {
+                    coincidence += 1.0 / encryptedText.Length;
+                }
+            }
+
+            return coincidence;
+        }
+
     }
 }
