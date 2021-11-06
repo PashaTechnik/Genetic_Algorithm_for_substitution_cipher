@@ -48,10 +48,10 @@ namespace Genetic_Algorithm_for_substitution_cipher
         {
             Random rnd = new Random();
 
-            int iteration = -1;
+            int iteration = 1;
             double proba;
             double alpha = 0.999;
-            double temperature = 30.0;
+            double temperature = 10.0;
             double epsilon = 0.001;
             double delta;
 
@@ -207,32 +207,37 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
             var text = solveText(parts);
             var fitness = 0.0;
-            foreach (var i in text)
+            // foreach (var i in text)
+            // {
+            //     fitness += NGramms.Letters[i] ;
+            // }
+            //fitness += Substitution.divideIntoBigramms(text)/2;
+            
+            var trigramms = Substitution.divideIntoTrigramms(text);
+            
+            foreach (var trigramm in trigramms)
             {
-                fitness += NGramms.Letters[i] ;
+                if (trigramm == "the")
+                {
+                    fitness += 100;
+                }
+                if (NGramms.Trirams.ContainsKey(trigramm))
+                {
+                    fitness += NGramms.Trirams[trigramm];
+                }
             }
             
-
-            fitness += Substitution.divideIntoBigramms(text)/2;
-            
-            //   var trigramms = divideIntoTrigramms(text);
-            //
-            //   foreach (var trigramm in trigramms)
-            //   {
-            //       if (NGramms.Trirams.ContainsKey(trigramm))
-            //       {
-            //           fitness += NGramms.Trirams[trigramm]/25;
-            //       }
-            //   }
-            //
-            // var quadrigramms = divideIntoQuadrigrams(text);
+            // var quadrigramms = Substitution.divideIntoQuadrigrams(text);
             //
             // foreach (var quadrigramm in quadrigramms)
             // {
-            //     
+            //     if (quadrigramm == "cong")
+            //     {
+            //         fitness += 100;
+            //     }
             //     if (NGramms.Quadrigrams.ContainsKey(quadrigramm)) 
             //     { 
-            //         fitness += NGramms.Quadrigrams[quadrigramm]/30 ;
+            //         fitness += NGramms.Quadrigrams[quadrigramm]*5 ;
             //     }
             // }
 

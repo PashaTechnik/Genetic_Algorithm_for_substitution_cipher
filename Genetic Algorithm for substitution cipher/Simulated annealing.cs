@@ -20,8 +20,8 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
             int iteration = -1;
             double proba;
-            double alpha = 0.999;
-            double temperature = 300.0;
+            double alpha = 0.99999;
+            double temperature = 1000.0;
             double epsilon = 0.001;
             double delta;
 

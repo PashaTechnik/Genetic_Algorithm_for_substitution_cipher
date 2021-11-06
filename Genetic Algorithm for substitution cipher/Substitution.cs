@@ -70,10 +70,10 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
                population = GetNewPopulation(population);
                population = Mutation(population); 
-               population = population.OrderByDescending(x => calculateCoincidence(Program.encryptedText,x)).ToList();
+               population = population.OrderByDescending(x => CalculateFitness(x)).ToList();
                if (CalculateFitness(population.First()) > CurrentFitness)
                {
-                   CurrentFitness = calculateCoincidence(Program.encryptedText, population.First());
+                   CurrentFitness = CalculateFitness(population.First());
                    charToSubstitute = population.First();
                }
 
@@ -153,7 +153,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
        public List<char[]> GetNewPopulation(List<char[]> population)
         {
             List<char[]> newPopulation = new List<char[]>(population);
-            int alpha = 0;
+            int alpha = 3;
             Random rnd = new Random();
 
             while (population.Count != 0)
