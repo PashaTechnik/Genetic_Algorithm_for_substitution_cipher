@@ -15,11 +15,26 @@ namespace Genetic_Algorithm_for_substitution_cipher
             "andapplyfrequencyanalysistoeachofthemcanyoufindawaytousehigherorderfrequencystatisticswit" +
             "hthistypeofcipherthenextmagicalwordwilltaketothenextlabenZoybitlyslashtwocapitalycapitalZ" +
             "capitalblcapitalycapita";
-        
+
+
+        public static String encryptedTextWithKey =
+            "congratulationsthiswasntquiteaneasytasknowallthistestisjustgarbagetoletyouusesomefrequency" +
+            "analysiswesetsailonthisnewseabecausethereisnewknowledgetobegainedandnewrightstobewonandthe" +
+            "yjustbewonandusedfortheprogressofallpeopleforspacesciencelibenuclearscienceandalltechnolog" +
+            "yhasnoconscienceofitsownwhetheritwillbecomeaforceforgoodorilldependsonmanandonlyiftheunite" +
+            "dstatesoccupiesapositionofpreewinencecanwehelpdecidewhetherthisnewoceanwillbeaseaofpeaceor" +
+            "anewterrifyingtheaterofwaridonotsaytheweshouldorwillgounprotectedagainstthehostilemisuseof" +
+            "spaceanymorethanwegounprotectedagainstthehostileuseoflandorseabutidosaythatspacecanbeexplo" +
+            "redandmasteredwithoutfeedingthefiresofwarwithoutrepeatingthewistabesthatwanhasmadeinestend" +
+            "inghiswritaroundthisglobeofourswechoosetogotothemooninthisdecadeanddotheotherthingsnotbeca" +
+            "usetheyareeasybutbecausetheyarehardbecausethatgoalwillserfetoorganizeandweasurethebestofou" +
+            "renergiesandsyillsbecausethatchallengeisonethatwearewillingtoacceptoneweareunwillingtopost" +
+            "poneandonewhichweintendtowinandtheotherstoookandnowtherealdealbitlyslashthreelcapitalccapi" +
+            "taljcapitalijcapitale";
         static void Main(string[] args)
         {
 
-            using (StreamReader sr = new StreamReader("/Users/admin/Desktop/english_quadrigrams.txt", System.Text.Encoding.Default))
+            using (StreamReader sr = new StreamReader("/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/english_quadrigrams.txt", System.Text.Encoding.Default))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
@@ -39,7 +54,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
                 }
             }
             
-            using (StreamReader sr = new StreamReader("/Users/admin/Desktop/english_trigrams.txt", System.Text.Encoding.Default))
+            using (StreamReader sr = new StreamReader("/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/english_trigrams.txt", System.Text.Encoding.Default))
             {
                 string line;
                 while ((line = sr.ReadLine()) != null)
@@ -47,6 +62,16 @@ namespace Genetic_Algorithm_for_substitution_cipher
                     string[] point = line.Split(";");
             
                     NGramms.Trirams.Add( point[0].ToLower(), double.Parse(point[1]));
+                }
+            }
+            using (StreamReader sr = new StreamReader("/Users/admin/Desktop/Genetic Algorithm for substitution cipher/Genetic Algorithm for substitution cipher/english_bigrams.txt", System.Text.Encoding.Default))
+            {
+                string line;
+                while ((line = sr.ReadLine()) != null)
+                {
+                    string[] point = line.Split(";");
+            
+                    NGramms.Bigrams.Add( point[0].ToLower(), double.Parse(point[1]));
                 }
             }
 
@@ -71,7 +96,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
             // double coincidence = 0.0;
             // for (int i = 0; i < encryptedText.Length; i++)
             // {
-            //     if (encryptedText[i] == Substitution.Subtitute(Substitution.basedText.ToLower(), a.charToSubstitute)[i])
+            //     if (encryptedText[i] == Substitution.Subtitute(Substitution.basedText.ToLower(), cipher.charToSubstitute)[i])
             //     {
             //         coincidence += 1.0 / encryptedText.Length;
             //     }
@@ -99,6 +124,16 @@ namespace Genetic_Algorithm_for_substitution_cipher
             var text = SubstitutionWithKey.solveText(parts);
             Console.WriteLine(text);
             
+            double coincidence = 0.0;
+            for (int i = 0; i < text.Length; i++)
+            {
+                if (encryptedTextWithKey[i] == text[i])
+                {
+                    coincidence += 1.0 / text.Length;
+                }
+            }
+            
+            Console.WriteLine(coincidence);
         }
     }
 }

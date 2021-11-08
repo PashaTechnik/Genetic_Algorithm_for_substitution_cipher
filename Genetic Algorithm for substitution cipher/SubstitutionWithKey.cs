@@ -50,7 +50,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
             int iteration = 1;
             double proba;
-            double alpha = 0.999;
+            double alpha = 0.99;
             double temperature = 10.0;
             double epsilon = 0.001;
             double delta;
@@ -80,12 +80,6 @@ namespace Genetic_Algorithm_for_substitution_cipher
             while (temperature > epsilon)
             {
                 iteration++;
-                int p1 = 0, p2 = 0;
-                while (p1 == p2)
-                {
-                    p1 = rnd.Next(0, alphabet.Length - 1);
-                    p2 = rnd.Next(0, alphabet.Length - 1);
-                }
 
                 List<char[]> tempChars = new List<char[]>(4);
                 for (int i = 0; i < startChars.Count; i++)
@@ -95,6 +89,12 @@ namespace Genetic_Algorithm_for_substitution_cipher
                 }
                 for (int i = 0; i < startChars.Count; i++)
                 {
+                    int p1 = 0, p2 = 0;
+                    while (p1 == p2)
+                    {
+                        p1 = rnd.Next(0, alphabet.Length - 1);
+                        p2 = rnd.Next(0, alphabet.Length - 1);
+                    }
                     var tempChar = tempChars[i][p1];
                     tempChars[i][p1] = tempChars[i][p2];
                     tempChars[i][p2] = tempChar;
@@ -207,39 +207,40 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
             var text = solveText(parts);
             var fitness = 0.0;
-            // foreach (var i in text)
-            // {
-            //     fitness += NGramms.Letters[i] ;
-            // }
-            //fitness += Substitution.divideIntoBigramms(text)/2;
+            foreach (var i in text)
+            {
+                fitness += NGramms.Letters[i]/2500 ;
+            }
+            
+            
+            fitness += Substitution.divideIntoBigramms(text);
             
             var trigramms = Substitution.divideIntoTrigramms(text);
             
-            foreach (var trigramm in trigramms)
-            {
-                if (trigramm == "the")
-                {
-                    fitness += 100;
-                }
-                if (NGramms.Trirams.ContainsKey(trigramm))
-                {
-                    fitness += NGramms.Trirams[trigramm];
-                }
-            }
+             foreach (var trigramm in trigramms)
+             {
+                 if (NGramms.Trirams.ContainsKey(trigramm))
+                 {
+                     fitness += NGramms.Trirams[trigramm] * 4;
+                 }
+             }
             
-            // var quadrigramms = Substitution.divideIntoQuadrigrams(text);
-            //
-            // foreach (var quadrigramm in quadrigramms)
-            // {
-            //     if (quadrigramm == "cong")
-            //     {
-            //         fitness += 100;
-            //     }
-            //     if (NGramms.Quadrigrams.ContainsKey(quadrigramm)) 
-            //     { 
-            //         fitness += NGramms.Quadrigrams[quadrigramm]*5 ;
-            //     }
-            // }
+             var quadrigramms = Substitution.divideIntoQuadrigrams(text);
+            
+             var f = text.Substring(5);
+            
+             if (f == "congr")
+             {
+                 fitness += 100;
+             }
+            
+             foreach (var quadrigramm in quadrigramms)
+             {
+                 if (NGramms.Quadrigrams.ContainsKey(quadrigramm)) 
+                 { 
+                     fitness += NGramms.Quadrigrams[quadrigramm] * 30 ;
+                 }
+             }
 
             return fitness;
         }

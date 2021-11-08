@@ -310,32 +310,32 @@ namespace Genetic_Algorithm_for_substitution_cipher
             var fitness = 0.0;
             // foreach (var i in text)
             // {
-            //     fitness += NGramms.Letters[i] ;
+            //     fitness += NGramms.Letters[i]/2000 ;
             // }
             
 
-             //fitness += divideIntoBigramms(text)/20;
-            
+             fitness += divideIntoBigramms(text);
+             
              var trigramms = divideIntoTrigramms(text);
-            
+             
              foreach (var trigramm in trigramms)
              {
                  if (NGramms.Trirams.ContainsKey(trigramm))
                  {
-                     fitness += NGramms.Trirams[trigramm];
+                     fitness += NGramms.Trirams[trigramm]*4;
                  }
              }
             
-            var quadrigramms = divideIntoQuadrigrams(text);
-            
-            foreach (var quadrigramm in quadrigramms)
-            {
-                
-                if (NGramms.Quadrigrams.ContainsKey(quadrigramm)) 
-                { 
-                    fitness += NGramms.Quadrigrams[quadrigramm]*5;
-                }
-            }
+            // var quadrigramms = divideIntoQuadrigrams(text);
+            //
+            // foreach (var quadrigramm in quadrigramms)
+            // {
+            //     
+            //     if (NGramms.Quadrigrams.ContainsKey(quadrigramm)) 
+            //     { 
+            //         fitness += NGramms.Quadrigrams[quadrigramm]*30;
+            //     }
+            // }
 
             return fitness;
         }
