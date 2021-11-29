@@ -50,8 +50,8 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
             int iteration = 1;
             double proba;
-            double alpha = 0.99;
-            double temperature = 10.0;
+            double alpha = 0.9999;
+            double temperature = 20.0;
             double epsilon = 0.001;
             double delta;
 
@@ -207,10 +207,10 @@ namespace Genetic_Algorithm_for_substitution_cipher
 
             var text = solveText(parts);
             var fitness = 0.0;
-            foreach (var i in text)
-            {
-                fitness += NGramms.Letters[i]/2500 ;
-            }
+            // foreach (var i in text)
+            // {
+            //     fitness += NGramms.Letters[i]/2500 ;
+            // }
             
             
             fitness += Substitution.divideIntoBigramms(text);
@@ -221,24 +221,18 @@ namespace Genetic_Algorithm_for_substitution_cipher
              {
                  if (NGramms.Trirams.ContainsKey(trigramm))
                  {
-                     fitness += NGramms.Trirams[trigramm] * 4;
+                     fitness += NGramms.Trirams[trigramm];
                  }
              }
             
              var quadrigramms = Substitution.divideIntoQuadrigrams(text);
-            
-             var f = text.Substring(5);
-            
-             if (f == "congr")
-             {
-                 fitness += 100;
-             }
-            
+
+
              foreach (var quadrigramm in quadrigramms)
              {
                  if (NGramms.Quadrigrams.ContainsKey(quadrigramm)) 
                  { 
-                     fitness += NGramms.Quadrigrams[quadrigramm] * 30 ;
+                     fitness += NGramms.Quadrigrams[quadrigramm] * 10 ;
                  }
              }
 

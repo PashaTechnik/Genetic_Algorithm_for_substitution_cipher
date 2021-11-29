@@ -75,36 +75,40 @@ namespace Genetic_Algorithm_for_substitution_cipher
                 }
             }
 
-            // Substitution a = new Substitution();
-            // a.SolveCipher();
-            //
-            // Console.WriteLine("result");
-            // Console.WriteLine(a.charToSubstitute);
-            // Console.WriteLine(a.CurrentFitness);
-            // Console.WriteLine(Substitution.Subtitute(Substitution.basedText.ToLower(), a.charToSubstitute));
 
-            // Simulated_annealing cipher = new Simulated_annealing();
-            // cipher.FindBestPath();
-            //
-            // Console.WriteLine("result");
-            // Console.WriteLine(cipher.charToSubstitute);
-            // Console.WriteLine(cipher.CurrentFitness);
-            // Console.WriteLine(Substitution.Subtitute(Substitution.basedText.ToLower(), cipher.charToSubstitute));
-            //
-            //
-            //
-            // double coincidence = 0.0;
-            // for (int i = 0; i < encryptedText.Length; i++)
-            // {
-            //     if (encryptedText[i] == Substitution.Subtitute(Substitution.basedText.ToLower(), cipher.charToSubstitute)[i])
-            //     {
-            //         coincidence += 1.0 / encryptedText.Length;
-            //     }
-            // }
-            //
-            // Console.WriteLine(coincidence);
+            //SolveSubstitution();
+            SolveSubstitutionWithKey();
+
+
+
+        }
+
+        static void SolveSubstitution()
+        {
+            Simulated_annealing cipher = new Simulated_annealing();
+            cipher.FindBestPath();
+            
+            Console.WriteLine("result");
+            Console.WriteLine(cipher.charToSubstitute);
+            Console.WriteLine(cipher.CurrentFitness);
+            Console.WriteLine(Substitution.Subtitute(Substitution.basedText.ToLower(), cipher.charToSubstitute));
             
             
+            
+            double coincidence = 0.0;
+            for (int i = 0; i < encryptedText.Length; i++)
+            {
+                if (encryptedText[i] == Substitution.Subtitute(Substitution.basedText.ToLower(), cipher.charToSubstitute)[i])
+                {
+                    coincidence += 1.0 / encryptedText.Length;
+                }
+            }
+            
+            Console.WriteLine(coincidence);
+        }
+
+        static void SolveSubstitutionWithKey()
+        {
             SubstitutionWithKey cipherWithKey = new SubstitutionWithKey();
             cipherWithKey.FindBestPath();
             Console.WriteLine("result");

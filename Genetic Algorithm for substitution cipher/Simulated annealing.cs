@@ -21,7 +21,7 @@ namespace Genetic_Algorithm_for_substitution_cipher
             int iteration = -1;
             double proba;
             double alpha = 0.999;
-            double temperature = 15.0;
+            double temperature = 20.0;
             double epsilon = 0.001;
             double delta;
 
@@ -73,12 +73,12 @@ namespace Genetic_Algorithm_for_substitution_cipher
                         }
                     }
                 }
-                temperature *= alpha;
 
                 if (iteration % 40 == 0)
+                {
                     Console.WriteLine(Substitution.CalculateFitness(startChars));
-                
-
+                    temperature *= alpha;
+                }
             }
             
         }
